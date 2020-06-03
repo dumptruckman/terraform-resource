@@ -5,6 +5,7 @@ image_resource:
   type: docker-image
   source:
     repository: 7factor/terraform-resource
+    tag: dev
 
 inputs:
 - name: resource-src
