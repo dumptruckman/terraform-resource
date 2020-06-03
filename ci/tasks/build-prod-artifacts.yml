@@ -4,8 +4,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: ljfranklin/terraform-resource
-    tag: dev
+    repository: 7factor/terraform-resource
 
 inputs:
 - name: resource-src
