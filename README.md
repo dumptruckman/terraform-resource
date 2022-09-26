@@ -1,3 +1,28 @@
+## Deprecated
+
+This fork is outdated. Please update to the original version of the resource:
+[ljfranklin/terraform-resource](https://github.com/ljfranklin/terraform-resource). The initial purpose of this fork
+is no longer relevant and there's little reason to spend time maintaining this version.
+
+### Migration Instructions
+
+In most cases, migrating to [ljfranklin/terraform-resource](https://github.com/ljfranklin/terraform-resource) is just
+a matter of switching the source repository of the terraform resource type in your concourse pipelines. However, there
+is one significant difference between our fork and the original that may require you to make additional changes.
+
+In particular, our fork will automatically extract the contents of files into variables when the file name was used
+as a variable value. For example `ecs_env_blob: ecs-env-blob/output.json` in the 7Factor fork will extract the contents
+of the `output.json` file as the value for the `ecs_env_blob` variable. This is not supported in the ljfranklin version.
+
+In order to migrate this behavior, you will need to replace these sorts of instances with the 
+[`load_var`](https://concourse-ci.org/load-var-step.html) step. To replace the example above, you would add a new step
+before the step where the file contents are needed that looks like so:
+```yml
+- load_var: ecs_env_blob
+  file: ecs-env-blob/output.json
+```
+Then you can inject the blob into the variable like a normal concourse variable: `ecs_env_blob: ((ecs_env_blob))`.
+
 ## Terraform Concourse Resource
 
 A [Concourse](http://concourse.ci/) resource that allows jobs to modify IaaS resources via [Terraform](https://www.terraform.io/).
